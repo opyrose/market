@@ -4,8 +4,8 @@ module.exports = router;
 
 const prisma = require("../prisma")
 
-router.get("/products", async (req, res, next)=>{
-    try{
+router.get("/products", async (req, res, next) => {
+    try {
         const products = await prisma.products.findMany();
         res.json(products);
     } catch (e) {
@@ -13,16 +13,16 @@ router.get("/products", async (req, res, next)=>{
     }
 });
 
-router.get("/products/:id", async (req, res, next)=>{
-    const { id }= req.params; 
-    const includeOrders = req.user 
-    ? { where: { ownerId: req.user.id}}
-    :false
+router.get("/products/:id", async (req, res, next) => {
+    const { id } = req.params;
+    const includeOrders = req.user
+        ? { where: { ownerId: req.user.id } }
+        : false
     try {
-        const product = await prisma.products.id.findUniqueOrThrow();
+        const product = await prisma.product.id.findUniqueOrThrow();
         res.json(product);
     } catch (e) {
-        next (e);
+        next(e);
     }
 
 })
